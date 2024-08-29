@@ -1,0 +1,686 @@
+openapi: 3.0.3
+info:
+  version: 0.1.9
+  title: CRM Lead Generation REST API (Save)
+  description: API to create lead in Bank's CRM system.</br></br>
+    
+    
+    <b>{ </br></br>
+    &nbsp;&nbsp;&nbsp;"RequestEncryptedValue" :&nbsp; " ",</br></br>
+    &nbsp;&nbsp;&nbsp;"SymmetricKeyEncryptedValue" :&nbsp; " ",</br></br>
+    &nbsp;&nbsp;&nbsp;"Scope" :&nbsp; " ",</br></br>
+    &nbsp;&nbsp;&nbsp;"TransactionId" :&nbsp; " ",</br></br>
+    &nbsp;&nbsp;&nbsp;"OAuthTokenValue" :&nbsp; " "</br></br>
+    }</b></br>
+    
+    
+    The individual fields of the Standard JSON Request Payload are briefly described below- 
+    
+    <li><b>RequestEncryptedValue</b> :- This will contain the encrypted value of digitally signed original REST-JSON request sample.(Mandatory)</li></br>
+     <li><b>SymmetricKeyEncryptedValue</b> :- This will contain the encrypted value of a symmetric key used in field 1.(Mandatory)</li></br>
+     <li><b>Scope</b> :- This field should be the exact value which was set on the HDFC Bank’s API Portal during the partner onboarding process and indicates which external partner is invoking the API.(Mandatory)</li></br>
+     <li><b>TransactionId</b> :- External partners need to set a transaction ID to uniquely identify every request, in order to retrieve it from an audit trail at a later date.(Mandatory)</li></br>
+       <li><b>OAuthTokenValue</b> :- This value can be obtained by invoking HDFC Bank’s token generator service (N/A) 
+       </li></br>
+       
+       
+       <b>CRM_Save_REST_API API Gateway Service URL's</b></br>
+    <b>UAT Endpoint</b> :- https://api-uat.hdfcbank.com/API/CRM_Save_REST</br>
+    <b>PROD Endpoint</b> :- https://api.hdfcbank.com/API/CRM_Save_REST</br>
+servers: 
+   - url: https://api-tryitout-uat.hdfcbank.com
+tags:
+  - name: CRM Lead Generation REST API (Save)
+    description: <b>Medium Criticality</b>
+security:
+  - ApiKeyAuth: []           
+paths:
+ '/API/CRM/Sandbox/CRM_Save_REST':
+
+    post:
+      tags:
+        - CRM Lead Generation REST API (Save)
+      summary: CRM Lead Generation REST API (Save)
+      description: <a href='https://developer-uat.hdfcbank.com:8443/sites/default/files/2023-04/HDFCBank_UserManual_CRM_Save_REST_API_v1.2.docx'>User manual</a> 
+   
+      requestBody:
+        description: Request
+        required: true
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/request'
+      
+      parameters:
+        - in: header
+          name: apikey
+          required: true
+          schema:
+            type: string
+            example: aHNDiZ5fj52HXscBQMBEJwdG3BBNjBNNaeCyKt5ff4DL6RmO
+
+      responses:
+        '200':
+          description: response 
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/response' 
+        
+        '400':
+           description: 400 Bad Request
+           content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/Error400'
+              
+        '401':
+          description: 401 Unauthorized 
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/Error401' 
+     
+        '405':
+           description: 405 Method Not Allowed 
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error405'
+               
+        '410':
+           description: 410 Gone
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error410'
+               
+        '411':
+           description: 411 Length Required
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error411'
+        
+        '421':
+           description: 421 Misdirected Request
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error421'
+          
+        '422':
+           description: 422 Unprocessable Entity (WebDAV)
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error422'
+               
+        '429':
+           description: 429 Too Many Requests 
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error429'
+
+        '500':
+           description: 500 Internal Server Error 
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error500'
+        
+        '503':
+           description: 503 Service Unavailable
+           content:
+             application/json:
+              schema:
+               $ref: '#/components/schemas/Error503'
+components:
+  schemas:
+    request:
+      type: object
+      properties:
+        CRMnextObject:
+          type: object
+          required:
+          - FileBase64String
+          properties:
+             -xmlns:xsi:
+               type: string 
+               example: "http://www.w3.org/2001/XMLSchema-instance"
+             Description:
+              type: string
+              description: This is Free text Value
+              example: "1_PAN_FS"
+             ItemOwnerID: 
+              type: string
+              description: This is OwnerID which is used for InstaSavings.Default Value- 109
+              example: "109"
+             -xsi:type:
+              type: string
+              example: "api:DMS"
+             ObjectTypeId:
+              type: string
+              description: This is Leadid which is returned as part if lead creation api.
+              example: "6"
+             ItemName:
+              type: string
+              description: Name of the Document which is to be Uploaded
+              example: "test.png"
+             FileBase64String:
+              type: string
+              description: Document in base 64 format
+              example: "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EmN/9k4rLaz1nSTmJzMg7UhndYqJslsVydp4uZHEV3E0b9ORXSW84uYRKvQ0gLMa75AKsvxxUduvBY04nJqkJhRRSUxBRRRQAUUUlABRRRQAUlLSUAGKKKKAEopTSUgE7UUtJQMKO1FFAgoopKACiikoAKSlpDQAUUUUAJRRmkoAKKKSgCaiiioKCiil4piEooooAKO1HeigAooopgNrE8QXht7NsHk8CtpiAua4zWpTfarFaqcgHJoAv+GLLZB5jD5mOTXT1U0+AQ26gDtVukDCloooAKWkpRTABS0lFAC0dqO9FMAoNFFABRRRQAUUlLQAdqKOaTkUAFFLScUAJRRRQAUUUUAFFFFACUUtJQAUUUUhhSUtFIAoKhuCBRRTAz7zS7S4IMkSkipoo1hjWNBhR0qRzlqdCu+Ue1AFpRtjAptOfrim0yRe1JS0UwEooooAKKKKAEooooAKKKO9ACUUUUAFJS+1FACUlLSUgCjtRSUAFFFJQAUUUUAJRS0lABRiijtQAlGaOlJQAUUUhoAmoooqSgooooEFFFFABRS8UlABSUppppgVb+UQ2zvnGBmuX0KA3moS3bjqcD86v+J7srbiBT8znHFXNAtBb2aAjnGaYjYUbVA9KWiipGFLSYpaACiiigBcUCiimAUtJ70UAKKKKKYBRiiigAo5zRSUAFHNAoPWgApKU0lABRS0nagAooooAKSlooASilNJQNBRRRSAKSlopAFITxS0xqYEZqzbJtQse9QgZYCrmNqAU0JjDRRRTEFFFFACUUtJQAUd6KKAEooooAKKKKAEooooASilpM0AFJRRSASiiigApKKKACiiigApKKKACkPvS0lAAaSiigBM0UUUDJqKKKkYUUUc0CCiiigAoopKYBTJGCoSacTWbrF2Lazds844oA52djqWvhRykddjbRiOEDFcx4btCxNw/wB6Q5rrAMDAoAKKWikAUUUUAFFFL9aACjtRzRTAKKKOtAC0nej2NFAC0lLzRTAKKKKAEooooASiloxQAnFFLig0AJRRRQAUlLRQAUlFFAIKKKKQwooopAFM7089KbTAkgXL59Klc5aiMbY8+tNqiQooooAKKKKAEopaSgAooooASg0UUAFJRRQAUUZpKACkpaSkAUlLRQAlFFFACUUUUAFFFFACUUUUAFJijNFACHrSUtJQAUUUUDJqKWkqQCgUUUAFFFFABSUtJTAaSBXJ+Irg3F3DaIc5PNdPcyCKFmJ6CuQ05DfaxLcNyoOB+dAHU6XbCC2UAdBV7tTY12RgU6gBaKKXNIAxSUtGKYCUoooFABRiiigAooFFABxRRjHWimAtHaikoAKBRR0oAWkpaSgA7UUUGgA5pKUmkoAKKKKACikooAKKKKBhRRRSAWikoJpAIT2pVXcwFN75qaAcFjTAkfjgUylPJpKokKKKKACg0lFABRRRQAlFFFABSUUUAFFJQKAFpO9FJQAUUUGkAUlFFABRig0UAJRRR2oAKKKKAEooooAQ0UUlABSGlpKACg0UGgZPRRRUgJRS0UAJRRRQAU0040xuFJoAw/EV55FkyKfmb5RTfDlp5VspYfMfmNZWpSG/11IAfkjOTXW2UQihGBTEizRRS0hhS0lLTAKPSijNAAKKPaigA5ozS0nSgAoo70Z7UwCjvSCl5oATNL16UlFAC5o70lLQAfjRRSZoAKKSigBaKSigAzS0neigAopKKQxaKSigBaKKKQBTWOKcaiZsmgBSegq2PliAqjADJP7CrrHmqExKKSimIWkoooAKKKSgAooooAKKKKAEooooATrRRmg0AFJR2ooAKM0UlIAooooAKSiigBaSiigApKWkoAKSlpKACkoooAO9BopKACiiigZPRmiipAKKKKACkpaSgBKpajci2tHcnoKuGuY8TXJZUtkPzSHFMCtoMH2m4kuWHzSNkH2rsEG1QPSsvRbVYbdcDoMVrUAFFFLSAKKSloAXNFJ7UtMAPFGaKSgBRRSUvSgBKKXFJTAU0dqSigAoozRQAtJRRQAUUUlABRRQaQBSUUUAFFFFAwopKWgAo7UlLQAtFJS0gEY4FQO2FJqRz2qFvmYIO9MC1ZptjLnvUvelA2RhR2ptMli0lFFMAooooASilpKACiiigApKKKADmjNJRQAZpDS8UlABRRRSASiiigAooo6UAJRRRQAUUUUAFJRRQAdqSiigBKKKKAExRR3o7UDCg0UUAT0UYoFSAUd6KKAEoNFIaARHO4SMk1xik6hrzS5JSPgfWug128FtZOc8kYFZnh60O0ORyx3E/WgDpLWPy4VGMVPQOlFABS0UUAFFJS0ABpTSdaKACiiigAooooAKKKKAAUUUUwDvRRRQAUUUlABRS0lABR1oopAJRS0lMAooooGGKKKKACiilpAFIaWkbpQBEx5p1qm+YuegppHFWoU8uH600DFY5NJRRVEhRRRQAUUUlAC0lFFABSUtJQAUnelpKAA0lONJSASiiigAooooASiiigAooooASilpKACiikoAKKKKACm0tJQAUUhpe1AxKO1FFABRRRQBPRRRUgFJS0lABSEgAmlqtdyiKFmJxgUwOY16b7VfxWq8jO5vwNdBpcAigBxjIxXM6ahvdRluW7tgfSuziQJGqjsKQx9FFFAhaKKKAClpKKADiloooASiiigAooooAKKKOKACiikoAWk70UUwCiiikAUUUUAFFFFABSUUUwCiiigAooooGLRRRSAKa1KeKZnvTAci7pAKsOe1RW44LGpDzzTExKM0UnegQUUZooAKM0UUAFIaWgUAJQaKKAEooooAKKKKAEooooAKKKKAEooooAKSlooASilpKACkpaKAEoopDQAGk70ppKACjtRSUAFFFFAwoNFFAE9FIsiP91hSkVIBSUtJQAma57xHemK2Ma/ec7RW/IwVSa4y9kOoa2sY+5Fz+NDA1dDtPLVOOAK6CqtjD5UA45NWqBsKWkpaBBS0lFADs0lGaBQAtFJRTAWkoopAFFFFACUUUUAFFLSUAFHaiimAd6KKKQBRRRQAUUUlABRRRTAKKKKBhRRSikAUUUlACMaTGePWg9afCN0n0pgTYCRgU2lY5NJTJENBpaSgAzRRRmgA7UlFFABRR1ooAKKKSgAooooAKKKKACikooAKKKKAE7UUUUAFFFFACZopaOtACUlLiigBKDRRQA00U7FNNABRRRQAlFFFAwooooA5LbremngmZBVy18UqGCXStG3TmulZFYYIqjdaPa3QO+NfwGKkCa31K2uVBSRT9DVkENyprk7nw09uxks5nVvTJxUC6pqumcTxGRB3FMDpdVuBa2UkmegrndBt2ldp2HzSMTn2rN1TxLFqPl2oJV2Ybga6XRNkcYGRjAxSYI3FGFApaQEEdaWkMWikopiFopKWgAooooAO1LSUtABRSUUALRSUUAFHaiigAooooAKKKKACiiigAooooAMUUUUwEooooGFFFFABRS0UgCkNLimmmA2p4V2x5PeoQNzhastgAAUxMbRRRQIKQilpDQAUlLSUALSUUUAFFFFACUUUUDCiiigApKWkoELSUUUAFJS0lABRRRQAUGikoAXNJRRQ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"
+    response:
+      type: object
+      properties:
+       SaveResponse:
+          type: object
+          properties:
+           xmlns:
+            type: string
+            example: "http://www.crmnext.com/api/"
+           xmlns:s:
+            type: string
+            example: "http://schemas.xmlsoap.org/soap/envelope/"
+           SaveResult:
+            type: object
+            properties:
+             xmlns:i:
+              type: string
+              example: "http://www.w3.org/2001/XMLSchema-instance"
+             SaveResult:
+              type: object
+              required:
+              - IsSuccess
+              - Message
+              - ApiObject
+              properties:
+               IsSuccess:
+                type: boolean
+                description: Status of the transaction
+                example: true
+               Message:
+                 type: string
+                 description: Description
+                 example: "Successfully Uploaded"
+               objectKey:
+                type: object
+                required:
+                - ItemKey
+                properties: 
+                 ItemKey:
+                  type: integer
+                  description: Unique Object Key generated post successfully uploading the document
+                  example: 92515478
+               ApiObject:
+                type: object
+                properties: 
+                 TerritoryName:
+                  type: object
+                  properties: 
+                   i:nil:
+                    type: boolean
+                    example: true
+                 Category:
+                   type: object
+                   properties:
+                    i:nil:
+                      type: boolean
+                      example: true
+                 Description:
+                  type: object
+                  properties:
+                    i:nil:
+                      type: boolean
+                      example: true
+                 Keywords:
+                  type: object
+                  properties:
+                    i:nil:
+                      type: boolean
+                      example: true 
+                 AadharCardNumber:
+                  type: object
+                  properties:
+                    i:nil:
+                      type: boolean
+                      example: true       
+                 ConvertPDFToImage:
+                  type: boolean
+                  example: false
+                 ProcessInFreeFlow:
+                  type: boolean
+                  example: false
+                 FileBytes:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 AutoDocFieldDataCollection:
+                  type: object
+                  properties:      
+                   i:nil:
+                      type: boolean
+                      example: true 
+                 Gender:
+                  type: object
+                  properties:      
+                   i:nil:
+                      type: boolean
+                      example: true 
+                 ParentName:
+                  type: string
+                  example: ""
+                 IsDedupeSearch:
+                  type: boolean
+                  example: false
+                 StatusCode:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true 
+                 ParentFolderID:
+                  type: integer
+                  example: 0
+                 SearchConditions:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true  
+                 GenderID:
+                  type: boolean
+                  example: 0
+                 ImageInfoCollection:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 UploadTCPIP:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true 
+                 ObjectTypeId:
+                  type: integer
+                  example: 0
+                 ItemName:
+                  type: string
+                  example: "test.png"
+                 SmsOptOut:
+                  type: boolean
+                  example: false
+                 ObjectItemId:
+                  type: integer
+                  example: 0
+                 StatusCodeId:
+                  type: integer
+                  example: 0
+                 GenderCode:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 FilePath:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 ItemOwnerID:
+                  type: integer
+                  example: 0
+                 IsProtected:
+                  type: boolean
+                  example: false
+                 DocumentType:
+                  type: integer
+                  example: 0
+                 Custom:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 FileBase64String:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 LayoutKey:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true 
+                 ProfileImageInfo:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 EmailOptOut:
+                  type: boolean
+                  example: false
+                 PhoneOptOut:
+                  type: boolean
+                  example: false
+                 PanNumber:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 PreferredChannel:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: boolean
+                      example: true
+                 StatusId:
+                  type: integer
+                  example: 0
+                 DateofBirth:
+                  type: string
+                  example: "0001-01-01T00:00:00"
+                 Tag:
+                  type: object
+                  properties:
+                   i:nil:
+                      type: string
+                      example: true
+                 CompressionType:
+                  type: integer
+                  example: 0
+                 SearchMode:
+                  type: string
+                  example: "None"
+                 i:type:
+                  type: string
+                  example: "DMS"
+                          
+    Error400:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99400: Decryption Failed"
+                description: "TH99400: Decryption Failed" 
+         
+    Error401:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99401: Invalid API Key"
+                description: "TH99401: Invalid API Key"
+    
+                
+    Error405:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseeEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99405:Request Method Not Allowed For API Access"
+                description: "TH99405:Request Method Not Allowed For API Access"
+                
+    Error410:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99410:Cross Site Forgery Detected in API Request Message Payload"
+                description: "TH99410:Cross Site Forgery Detected in API Request Message Payload" 
+                
+    Error411:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99411:Invalid Content Type in API Request Message Payload"  
+                description: "TH99411:Invalid Content Type in API Request Message Payload"              
+     
+    Error421:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99421:Document Structure Threat in API Request Message Payload"         
+                description: "TH99421:Document Structure Threat in API Request Message Payload"                                  
+    Error422:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99422:SQL Injection Detected in API Request Message Payload"
+                description: "TH99422:SQL Injection Detected in API Request Message Payload"
+                
+    Error429:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99429:DDOS Attack Detected from Requestor"
+                description: "TH99429:DDOS Attack Detected from Requestor"            
+    
+    Error500:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99500:Backend Service Provided Unexpected Response"
+                
+                description: "TH99500:Backend Service Provided Unexpected Response"
+  
+    Error503:
+      type: object
+      required:
+        - ResponseEncryptedValue
+          GWSymmetricKeyEncryptedValue
+          Scope
+          TransactionId
+          Status
+      properties:
+        
+              ResponseEncryptedValue:
+                type: string
+                example:  ""
+              GWSymmetricKeyEncryptedValue:
+                type: string
+                example:  ""
+              Scope:
+                type: string
+                example: ExampleOrg
+              TransactionId:
+                type: string
+                example: 2019-05-04 T11:46:12.969+05:30
+              Status:
+                type: string
+                example: "TH99503:API Back-end Service Not Available or Timed-Out"
+                description: "TH99503:API Back-end Service Not Available or Timed-Out"
+    
+                
+  securitySchemes:
+     ApiKeyAuth:        
+      type: apiKey
+      in: header       
+      name: apikey                                                 
+             
